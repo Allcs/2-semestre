@@ -1,0 +1,4 @@
+VLSM(Variable Length Subnet Mask) 
+-Para entender o metodo de calculo de sub-redes entendido por VLSM,precisamos aprender primeiro oq são Subredes
+- SubRedes:
+ -Consiste em Sub dividir uma rede, por exemplo: 192.168.0.0/24 em duas redes 
