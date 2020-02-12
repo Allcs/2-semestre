@@ -1,0 +1,49 @@
+enable
+configure terminal
+hostname RT-Grupo2
+banner motd "Roteador Grupo 2-Acesso somente as pessoas autorizadas"
+enable secret SenhadaEnable
+service password-encryption
+username admin privilege 15 secret admin1
+username grupo02 privilege 15 secret 123@456
+ip domain-name grupo2.local
+crypto key generate rsa general-keys modulus 1024
+security passwords min-length 8
+login block-for 240 attempts 7 within 10
+line vty 0 15
+login local
+transport input ssh
+exec-timeout 5
+exit
+line console 0
+password SenhadaConsole
+login
+exit
+service password-encryption
+interface gigabitEthernet 0/1
+no shutdown
+interface gigabitEthernet 0/1.10
+encapsulation dot1q 10
+ip address 172.20.6.1 255.255.255.192
+description VLAN 10
+interface gigabitEthernet 0/1.20
+encapsulation dot1q 20
+ip address 172.20.5.129 255.255.255.128
+description VLAN 20
+interface gigabitEthernet 0/1.30
+ip address 172.20.5.1 255.255.255.128
+description VLAN 30
+interface gigabitethernet 0/1.104
+encapsulation dot1q 104
+ip address 172.20.8.252 255.255.255.248
+exit
+ip route 172.20.0.0 255.255.254.0 172.20.6.66
+ip route 172.20.2.0 255.255.254.0 172.20.6.66
+ip route 172.20.4.0 255.255.255.0 172.20.6.66
+ip route 172.20.10.0 255.255.255.252 172.20.6.66
+interface gigabitEthernet 0/0
+no shutdown
+ip address 172.20.6.65 255.255.255.252
+exit
+ip default-gateway 172.20.8.1
+do wr
